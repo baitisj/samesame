@@ -1,0 +1,19 @@
+sameln -A:
+./work/test1/file2a => ./work/test1/file1a
+./work/test1/file3a => ./work/test1/file1a
+
+sameln -Z:
+./work/test1/file2a => ./work/test1/file3a
+./work/test1/file1a => ./work/test1/file3a
+
+sameln -At:
+./work/test1/file3a => ./work/test1/file1a
+./work/test1/file2a => ./work/test1/file1a
+
+sameln -Zt:
+./work/test1/file3a => ./work/test1/file2a
+./work/test1/file1a => ./work/test1/file2a
+
+sameln -L:
+./work/test1/file1a => ./work/test1/file2a
+./work/test1/file3a => ./work/test1/file2a

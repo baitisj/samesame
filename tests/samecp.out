@@ -1,0 +1,19 @@
+samecp -A:
+./work/test1/file2a -> ./work/test1/file1a
+./work/test1/file3a -> ./work/test1/file1a
+
+samecp -Z:
+./work/test1/file2a -> ./work/test1/file3a
+./work/test1/file1a -> ./work/test1/file3a
+
+samecp -At:
+./work/test1/file3a -> ./work/test1/file1a
+./work/test1/file2a -> ./work/test1/file1a
+
+samecp -Zt:
+./work/test1/file3a -> ./work/test1/file2a
+./work/test1/file1a -> ./work/test1/file2a
+
+samecp -L:
+./work/test1/file1a -> ./work/test1/file2a
+./work/test1/file3a -> ./work/test1/file2a

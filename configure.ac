@@ -1,0 +1,151 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.62)
+AC_INIT(SameSame, 1.10, samesame@akruijff.dds.nl)
+AM_INIT_AUTOMAKE([-Wall -Werror])
+AC_CONFIG_SRCDIR([src/samecmd.cpp])
+AC_CONFIG_HEADERS([config.h])
+
+# Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_LN_S
+
+# Checks for libraries.
+
+# Checks for header files.
+AC_CHECK_HEADERS_ONCE([fcntl.h inttypes.h limits.h locale.h stddef.h stdint.h stdlib.h string.h strings.h sys/param.h sys/time.h unistd.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+#AC_C_CONST
+#AC_HEADER_TIME
+#AC_TYPE_INT32_T
+#AC_TYPE_INT64_T
+#AC_TYPE_UINT64_T
+AC_C_INLINE
+AC_TYPE_MODE_T
+AC_TYPE_OFF_T
+AC_TYPE_PID_T
+AC_TYPE_SIGNAL
+AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
+AC_TYPE_UID_T
+AC_TYPE_UINT32_T
+
+# Checks for library functions.
+#AC_FUNC_LSTAT
+#AC_FUNC_STAT
+AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
+AC_FUNC_MALLOC
+AC_FUNC_MEMCMP
+AC_FUNC_MMAP
+AC_TYPE_SIGNAL
+AC_CHECK_FUNCS_ONCE([gettimeofday lchown localeconv memset mkdir munmap rmdir strchr strstr strtol strtoul])
+
+# Experimental does this really speed up things?
+AC_ARG_ENABLE([checksum],
+AS_HELP_STRING([--enables-checksums], [Enables checksums]),
+[], [checksum=false])
+AM_CONDITIONAL(CHECKSUM, test x$checksum != xfalse)
+
+AC_ARG_ENABLE([read-onces],
+AS_HELP_STRING([--disables-read-onces], [Reduce read buffer size]),
+[], [read_onces=true])
+AM_CONDITIONAL(READ_ONCES, test x$read_onces != xfalse)
+
+# Experimental does this really speed up things?
+AC_ARG_ENABLE([preread],
+AS_HELP_STRING([--enables-preread], [Read files before checking for matches]),
+[], [preread=false])
+AM_CONDITIONAL(PREREAD, test x$preread != xfalse)
+
+AC_ARG_ENABLE([debug],
+AS_HELP_STRING([--enables-debug], [Runtime check for bugs]),
+[], [debug=false])
+AM_CONDITIONAL(DEBUG, test x$debug != xfalse)
+
+AC_ARG_ENABLE([disk-storage],
+AS_HELP_STRING([--enables-disk-storage], [Store paths on disk when memory is full]),
+[], [disk_storage=false])
+AM_CONDITIONAL(DISK_STORAGE, test x$disk_storage != xfalse)
+
+AC_ARG_ENABLE([experimental],
+AS_HELP_STRING([--enables-experimental], [Enables experimental support]),
+[], [experimental=false])
+AM_CONDITIONAL(EXPERIMENTAL, test x$experimental != xfalse)
+
+AC_ARG_ENABLE([low-memory-profile],
+AS_HELP_STRING([--enable-low-memory-profile], [Reduce non-essential functionality]),
+[],[low_memory_profile=false])
+AM_CONDITIONAL(LOW_MEMORY_PROFILE, test x$low_memory_profile != xfalse)
+
+AC_ARG_ENABLE([profiler],
+AS_HELP_STRING([--enable-profiler], [Enables profiler support]),
+[],[profiler=false])
+AM_CONDITIONAL(PROFILER, test x$profiler != xfalse)
+
+# This section controles what programs are build
+AC_ARG_ENABLE([samearchive],
+AS_HELP_STRING([--disables-samearchive], [Skip building samearchive]),
+[],[samearchive=true])
+AM_CONDITIONAL(SAMEARCHIVE, test x$samearchive != xfalse)
+
+AC_ARG_ENABLE([samearchive-lite],
+AS_HELP_STRING([--disables-samearchive-lite], [Skip building samearchive-lite]),
+[],[samearchive_lite=true])
+AM_CONDITIONAL(SAMEARCHIVE_LITE, test x$samearchive_lite != xfalse)
+
+AC_ARG_ENABLE([samecp],
+AS_HELP_STRING([--disables-samecp], [Skip building samecp]),
+[],[samecp=true])
+AM_CONDITIONAL(SAMECP, test x$samecp != xfalse)
+
+AC_ARG_ENABLE([samechflags],
+AS_HELP_STRING([--enables-samechflags], [Build samechflags]),
+[],[samechflags=false])
+AM_CONDITIONAL(SAMECHFLAGS, test x$samechflags != xfalse)
+
+AC_ARG_ENABLE([samechmod],
+AS_HELP_STRING([--enables-samechmod], [Build samechmod]),
+[],[samechmod=false])
+AM_CONDITIONAL(SAMECHMOD, test x$samechmod != xfalse)
+
+AC_ARG_ENABLE([samechown],
+AS_HELP_STRING([--disables-samechown], [Skip building samechown]),
+[],[samechown=true])
+AM_CONDITIONAL(SAMECHOWN, test x$samechown != xfalse)
+
+AC_ARG_ENABLE([samedelay],
+AS_HELP_STRING([--disables-samedelay], [Skip building samedelay]),
+[],[samedelay=true])
+AM_CONDITIONAL(SAMEDELAY, test x$samedelay != xfalse)
+
+AC_ARG_ENABLE([samefile],
+AS_HELP_STRING([--disables-samefile], [Skip building samefile]),
+[],[samefile=true])
+AM_CONDITIONAL(SAMEFILE, test x$samefile != xfalse)
+
+AC_ARG_ENABLE([fsort],
+AS_HELP_STRING([--enables-fsort], [Build fsort not officially included]),
+[],[fsort=false])
+AM_CONDITIONAL(FSORT, test x$fsort != xfalse)
+
+AC_ARG_ENABLE([sameln],
+AS_HELP_STRING([--disables-sameln], [Skip building sameln]),
+[],[sameln=true])
+AM_CONDITIONAL(SAMELN, test x$sameln != xfalse)
+
+AC_ARG_ENABLE([samemv],
+AS_HELP_STRING([--disables-samemv], [Skip building samemv]),
+[],[samemv=true])
+AM_CONDITIONAL(SAMEMV, test x$samemv != xfalse)
+
+AC_ARG_ENABLE([samerm],
+AS_HELP_STRING([--disables-samerm], [Skip building samerm]),
+[],[samerm=true])
+AM_CONDITIONAL(SAMERM, test x$samerm != xfalse)
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
+

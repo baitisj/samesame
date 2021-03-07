@@ -1,0 +1,127 @@
+.TH SAMEFILE 1 "14 APRIL 2010" "" SAMESAME
+.\"
+.\" $Id: samesame.1,v 3.0 2009/01/01 00:00:00 akruijff Exp $
+.\"
+.\" To format this file into a text file say
+.\"
+.\"    nroff -man samesame.1              or
+.\"    groff -mandoc -Tascii samesame.1
+.\"
+.\" Copyright (c) 1996 Jens Schweikhardt.  All rights reserved.
+.\" Copyright (c) 2009 Alex de Kruijff.  All rights reserved.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+.\" IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+.\" OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+.\" IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+.\" INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+.\" NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+.\" DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+.\" THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+.\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+.\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+.SH NAME
+
+\fBsamesame\fP - introduction to the samesame tools
+.SH DESCRIPTION
+
+SameSame is a collection of tools that fall in to the category of file
+management software.
+These tools will prevent that you need to delete files or buy more disk
+space.
+Instead they solve low disk space problems by linking identical files
+together and thus free up waisted disk space.
+
+This collection was inspired by the application samefile written by Jens
+Schweikhardt.
+The collection comes with its own version of samefile that is noticeable
+faster and is able to process a much larger file list.
+
+This port containt two set of application: the first are duplicate files
+finder search for identical files and the second are duplicate file
+removers perform some kind of action based on those results.
+
+Typical usage would be: find / | samefile -i | samelink
+
+This would search for identical files and clean up wasted disk space by
+linking them together.
+If you prefer removing one of the identical file, then you should
+replace samelink with samerm.
+You can add the option -vn after both application for a verbose
+dry-run.
+
+The tools two groups: duplicate file finders and action driven tools.
+.SH DUPLICATE FILE FINDERS
+
+These tools read a list of filenames (one filename per line) from
+stdin and output the identical files on stdin.
+And report the identical files on the output.
+
+\fBsamearchive\fP reads a list of filenames (from stdin) and a list of
+directories (from the paramenters).
+And reports the identical files if, and only if, they have the same
+relative path.
+
+\fBsamearchive-lite\fP reads a partial list of filenames and directories
+(from the paramenters).
+And combines the partial list with the parameters to get a full list.
+And reports the identical files if, and only if, they have the same
+relative path.
+
+\fBsamefile\fP reads a list of filenames (from stdin) and reports the
+identical files.
+And reports a full list of identical files on the output.
+.SH ACTION DRIVEN TOOLS
+
+These tools all read the samefile output (each line containing two files
+that are identical) that the duplicate file finders output and perform
+some action.
+The can be split in non-consumers and consumerss.
+The latter consumers the match lines when they succeed in perorming the
+actions.
+And the non-consumers don't.
+
+The non-consumers are:
+
+\fBsamechflags\fP change file flags
+
+\fBsamechmod\fP change file modes
+
+\fBsamechown\fP change file owner and group
+
+The consumers are:
+
+\fBsamelink\fP frees up the waisted disk space by relinks one to the
+other.
+
+\fBsamecp\fP copies the first file of a pair of identical files to
+another location
+
+\fBsamemv\fP moves the first file of a pair of identical files to
+another location
+
+\fBsamerm\fP removes the last file of identical files to free disk space
+.SH "SEE ALSO"
+
+.BR samearchive-lite (1)
+.BR samefile (1)
+.BR samelink (1)
+.BR find (1)
+.BR ls (1)
+
+.SH AUTHOR
+
+.nf
+Alex de Kruijff
+.fi
+

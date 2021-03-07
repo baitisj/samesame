@@ -1,0 +1,321 @@
+.TH SAMELINK 1 "14 APRIL 2010" "" SAMESAME
+.\"
+.\" To format this file into a text file say
+.\"
+.\"    nroff -man sameln.1              or
+.\"    groff -mandoc -Tascii sameln.1
+.\"
+.\" Copyright (c) Alex de Kruijff.  All rights reserved.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+.\" IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+.\" OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+.\" IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+.\" INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+.\" NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+.\" DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+.\" THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+.\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+.\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+.SH NAME
+
+\fBsamechflags\fP change file flags
+
+\fBsamechmod\fP change file modes
+
+\fBsamechown\fP change file owner and group
+
+\fBsamecp\fP copies the first file of a pair of duplicate files
+
+\fBsamedelay\fP delays line output until the files are no longer in use
+
+\fBsameln\fP links duplicate files together
+
+\fBsamemv\fP moves the first file of a pair of duplicate files
+
+\fBsamerm\fP remove the last of a pair of duplicate files
+.SH SYNOPSIS
+
+\fBsamechflags\fP
+[\fB-g\fP \fIsize\fP] [\fB-m\fP \fIsize\fP]
+[\fB-S\fP \fIsep\fP] [\fB-dHmqVvw\fP]
+\fIflags\fP
+
+\fBsamechmod\fP
+[\fB-g\fP \fIsize\fP] [\fB-m\fP \fIsize\fP]
+[\fB-S\fP \fIsep\fP] [\fB-dHmqVvw\fP]
+\fImode\fP
+
+\fBsamechown\fP
+[\fB-g\fP \fIsize\fP] [\fB-m\fP \fIsize\fP]
+[\fB-S\fP \fIsep\fP] [\fB-dHmqVvw\fP]
+\fIowner\fP[:\fIgroup\fP]
+
+\fBsamecp\fP
+[\fB-A\fP | \fB-At\fP | \fB-L\fP | \fB-Z\fP | \fB-Zt\fP]
+[\fB-g\fP \fIsize\fP] [\fB-m\fP \fIsize\fP] 
+[\fB-o\fP \fIfilename\fP | \fB-p\fP \fIcommand\fP]
+[\fB-S\fP \fIsep\fP] [\fB-HlmsqVvw\fP]
+\fIdestination\fP [\fIsource\fP]
+
+\fBsamedelay\fP
+[\fB-S\fP \fIsep\fP] [\fB-HqVv\fP]
+
+\fBsameln\fP
+[\fB-A\fP | \fB-At\fP | \fB-L\fP | \fB-Z\fP | \fB-Zt\fP]
+[\fB-g\fP \fIsize\fP] [\fB-m\fP \fIsize\fP]
+[\fB-o\fP \fIfilename\fP | \fB-p\fP \fIcommand\fP]
+[\fB-S\fP \fIsep\fP] [\fB-HmsqVvw\fP]
+
+\fBsamemv\fP
+[\fB-A\fP | \fB-At\fP | \fB-L\fP | \fB-Z\fP | \fB-Zt\fP]
+[\fB-g\fP \fIsize\fP] [\fB-m\fP \fIsize\fP]
+[\fB-o\fP \fIfilename\fP | \fB-p\fP \fIcommand\fP]
+[\fB-S\fP \fIsep\fP] [\fB-HmqVvw\fP]
+\fIdestination\fP [\fIsource\fP]
+
+\fBsamerm\fP
+[\fB-A\fP | \fB-At\fP | \fB-L\fP | \fB-Z\fP | \fB-Zt\fP]
+[\fB-g\fP \fIsize\fP] [\fB-m\fP \fIsize\fP]
+[\fB-o\fP \fIfilename\fP | \fB-p\fP \fIcommand\fP]
+[\fB-S\fP \fIsep\fP] [\fB-HmqVvw\fP]
+.SH DESCRIPTION
+
+These programs reads the samefile output (indicating two files have
+identical contence) from stdin and perform some action.
+The naming convention is as follows: all prorams start with the prefix
+'same' followed by the name of the equivalent (system) program or, if
+this doesn't exist, a discriptive name.
+
+Some programs, like sameln, create a temporary backup in order to
+prevent the loss of data. As of version 1.9 they use the postfix the path
+with '.programname.numer' (i.e. .sameln.0). Earlier versions used
+'.samefile.number'. Even so, if the data is important to you then, it
+might be wise to \fBbackup your data\fP. On FreeBSD 7.1 or newer you
+could make a backup using the following command:
+
+.nf
+	cp -Rpl sources backup-dir/
+.fi
+
+And later you can use \fBrsync\fP to sync the files.
+
+.nf
+	rsync -aHW backup-dir/sources .
+.fi
+
+.SH OPTIONS
+
+.IP "\fB-A\fP"
+Links to the filename that comes first in alphabetical order. (default)
+.IP "\fB-At\fP"
+Links to the filename that was created at the earliest date.
+.IP "\fB-d\fP
+Work on the parent directory of the file.
+.IP "\fB-g\fP \fIsize\fP"
+Don't process files with size greater then \fIsize\fP bytes. Default is 0.
+.IP \fB-H\fP
+Print human friendly statistic when at verbose level 2
+.IP \fB-L\fP
+Links to the filename with the most hard links.
+.IP \fB-l\fP
+Create a hard link instead. (implied for sameln)
+.IP "\fB-m\fP \fIsize\fP"
+Don't process files with size less or equal then \fIsize\fP bytes.
+Default is 0 which indicates there is no limit.
+.IP "\fB-o\fP \fIfile\fP"
+Match lines that are consumed are written in to the file instead of
+being silently dismissed. programs.
+.IP "\fB-p\fP \fIcommand\fP"
+Match lines that are consumed are passed though the command instead of
+being silently dismissed.
+
+For example: to prevent that I excedently delete my backup I set a flag
+on the entaire backup.
+As a consequence matches within the backups can't be linked together.
+If one pipes the matches lines first twice to samechflags, onces with
+the option \fB-d\fP.
+This however leafs the linked but also strips of there flags. For this
+the option \fB-p\fP exist.
+
+.nf
+# find . -type f -size +0 | samefile -i | samechflags -d noschg \\
+	| samechflags noschg | sameln -p "samedelay | \\
+	samechflags -d schg | samechflags schg > /dev/null" | \\
+	samedelay | samechflags -d schg | samechflags schg
+.fi
+
+The command above will find all matches withing the files that are
+larger than zero, remove the flags, hard links them together and than
+set the flags back to them.
+Even if the files didn't have the schg flag it will end up with it, unless the files do not have identical contences.
+Since sameln splits the match lines that it was able to link
+and there are two extra instances of samechflags.
+
+.nf
+# pstree -s same
+-+= 00100 root csh
+ |--= 12301 root find . -type f -size +0
+ |--- 12302 root samefile -i
+ |--- 12303 root samechflags -d noschg
+ |--- 12304 root samechflags noschg
+ |-+- 12305 root sameln -p samedelay | samechflags -d schg | s...
+ | \\-+- 12309 root sh -c samedelay | samechflags -d schg | sam...
+ |   |--- 12310 root samedelay
+ |   |--- 12311 root samechflags -d schg
+ |   \\--- 12312 root samechflags schg
+ |--- 12306 root samedelay
+ |--- 12307 root samechflags -d schg
+ \\--- 12308 root samechflags schg
+.fi
+
+The processes (12307, 12308, 12311, 12312) that set the schg flag can
+prevent sameln (12305) to hard link the two files. To eliminate this
+problem samedelay delays the line output until the new line and the old
+line have totaly different files on them.
+
+.IP \fB-q\fP
+This option keep the information you are recieved during the processes
+to a minimum. (Verbose level 0)
+.IP "\fB-S\fP \fIsep\fP"
+Use string \fIsep\fP as the output field separator, defaults to a tab
+character. Useful if filenames contain tab characters and output
+must be processed by another program, say \fBawk\fP (1).
+.IP \fB-s\fP
+Create a symbolic link.
+.IP \fB-V\fP
+Print the version information and exit.
+.IP \fB-v\fP
+This option increases the amount of information you recieve while
+running \fBsameln\fP. At level 0 you will just see the error messages.
+At level 1 you will see warning messages indicating that \fBsameln\fP
+coudn't do something. And at level 2 you will recieve information about
+the stages that \fBsameln\fP enters and some statistic when
+\fBsameln\fP finishes. Defaults to verbose level 1.
+.IP \fB-w\fP
+Don't check the file contence before linking two files to gether.
+Consequences of this option are that you run the risk of losing data,
+because you trust the input list (i.e. bugs); and reduce the time needed
+to process the input list.
+The advance is expected to be low when \fIsameln\fP gets its input
+though a pipe, because the file will most likely be in the cache of the
+operating system. 
+.IP \fB-Z\fP
+Links to the filename that comes last it in alphabetical order.
+.IP \fB-Zt\fP
+Links to the filename that was created at the latest date.
+.SH EXAMPLES
+
+Link all duplicate files in the current working directory:
+
+.nf
+% ls | samefile -i | sameln
+.fi
+
+Link all duplicate files in my HOME directory and
+subdirectories and also tell me if there are hard links:
+
+.nf
+% find $HOME -type f -size +0 | samefile -i | sameln
+.fi
+
+Remove all duplicate files in my HOME directory and subdirectory
+
+.nf
+% find $HOME -type f -size +0 | samefile -ir | samerm
+.fi
+
+Link all duplicate files in the \fI/usr\fP directory tree that are
+bigger than 10000 bytes and write filename pares that coudn't be
+processed to \fI/tmp/usr\fP.
+(that one is for the sysadmin folks, you may want to 'amp'
+- put it in the background with the ampersand & -
+this command because it takes a few minutes.)
+
+.nf
+% find /usr -type f -size +0 | samefile -g 10000 | sameln > /tmp/usr
+.fi
+
+Link all duplicate files in reverse order, but first changes the file
+flags of the files and there parent directories and later set them.
+
+.nf
+% find /path/to/backups -type f -size +0 | samefile -iZ | \\
+        chflags -d  noschg | chflags noschg | sameln -Zp "samedelay | \\
+        chflags -d schg | chflags schg > /dev/null" | samedelay | \\
+        chflags -d schg | chflags
+% schg
+.fi
+.SH DIAGNOSTICS
+
+\fB<number>...\fP
+This amount of lines processed so far.
+
+\fBfailed to create the backup\fP \fIpath\fP
+This is probably due to a 'permission denied' error on files or
+directories within the given \fIpath\fP for which you have no read
+permission.
+This error is given in order to prevent the loss of files. 
+
+\fBfailed to remove\fP \fIpath\fP
+This is probably due to a 'permission denied' error on files or
+directories within the given \fIpath\fP for which you have no read
+permission.
+
+\fBfailed to link\fP \fIpath\fP -> \fIpath\fP
+This is probably due to a 'permission denied' error on files or
+directories within the given \fIpath\fP for which you have no read
+permission.
+Before version 1.1 this owuld mean you would have lost a file, but from
+version 1.2 a backup file is created.
+
+\fBfailed to delete the backup\fP \fIpath\fP
+This is probably due to a 'permission denied' error on files or
+directories within the given \fIpath\fP for which you have no read
+permission.
+The relink of the original files was succesfull, but you do need to
+clean up the backup manually.
+
+\fBfree vnodes droped below threshold\fP
+This is normal.
+The program goes to sleep in order to alleviate stress on the system
+until the amount of free vnodes has risen above the threshold.
+The first this happend you may want to check top for any processes in
+the 'vlruwk' state. If this is then you might like to read BUGS
+section.
+.SH BUGS
+Your computer may become so slow that it may appear to frees.
+This is not a bug but is caused because the operating system is running
+out of resources.
+If you're on a FreeBSD you might 'cure' this by raising the
+kern.maxvnodes by 10 000.
+Other solutions incluse removing the option \fB-w\fP so the process will
+spend more time on one file or pipe the program to \fBsamefile\fP
+instead of reading from a large file.
+
+.SH "SEE ALSO"
+
+.BR samefile (1)
+.BR samesame (1)
+.BR chflags (1)
+.BR chmod (1)
+.BR chown (1)
+.BR ln (1)
+.BR rm (1)
+.BR df (1)
+.BR sysctl(8)
+.SH AUTHOR
+
+Alex de Kruijff
+

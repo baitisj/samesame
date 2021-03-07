@@ -1,0 +1,19 @@
+samemv -A:
+./work/test1/file2a
+./work/test1/file3a
+
+samemv -Z:
+./work/test1/file2a
+./work/test1/file1a
+
+samemv -At:
+./work/test1/file3a
+./work/test1/file2a
+
+samemv -Zt:
+./work/test1/file3a
+./work/test1/file1a
+
+samemv -L:
+./work/test1/file1a
+./work/test1/file3a

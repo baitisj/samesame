@@ -1,0 +1,19 @@
+samerm -A:
+./work/test1/file2a
+./work/test1/file3a
+
+samerm -Z:
+./work/test1/file2a
+./work/test1/file1a
+
+samerm -At:
+./work/test1/file3a
+./work/test1/file2a
+
+samerm -Zt:
+./work/test1/file3a
+./work/test1/file1a
+
+samerm -L:
+./work/test1/file1a
+./work/test1/file3a
